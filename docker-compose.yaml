@@ -1,0 +1,34 @@
+version: "3"
+services:
+  mariadb:
+    image: mariadb:latest
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - vaultnet
+    environment:
+      MYSQL_ROOT_PASSWORD: dbpasswd
+      MYSQL_DATABASE: vault
+      MYSQL_USER: vault
+      MYSQL_PASSWORD: vaultdbpasswd
+  etcd:
+    image: quay.io/coreos/etcd:latest
+    command: /usr/local/bin/etcd -listen-client-urls http://0.0.0.0:2379 -advertise-client-urls http://etcd:2379
+    networks:
+      - vaultnet
+  vault:
+    image: vault:latest
+    build: ./vault
+    ports:
+      - "8200:8200"
+    networks:
+      - vaultnet
+    depends_on:
+      - mariadb
+      - etcd
+    cap_add:
+      - IPC_LOCK
+networks:
+  vaultnet:
+volumes:
+  db-data:
