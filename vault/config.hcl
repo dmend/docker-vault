@@ -14,4 +14,4 @@ ha_storage "etcd" {
   ha_enabled = "true"
   address = "http://etcd:2379"
 }
-api_addr = "https://vault.redrobot.io:8200"
+api_addr = "https://vault.doug.gt:8200"
