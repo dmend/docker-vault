@@ -1,11 +1,12 @@
 FROM fedora:28
+ARG VAULT_PACKAGE=vault_1.0.0_linux_arm64.zip
 
 RUN dnf upgrade -y
 RUN dnf install -y unzip
 
-ADD vault_0.10.1_linux_amd64.zip /opt
+ADD $VAULT_PACKAGE /opt
 RUN mkdir /opt/vault && \
-    unzip /opt/vault_0.10.1_linux_amd64.zip -d /opt/vault
+    unzip /opt/$VAULT_PACKAGE -d /opt/vault
 ADD config.hcl /opt/vault
 ADD fullchain.pem /opt/vault
 ADD privkey.pem /opt/vault
