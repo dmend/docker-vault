@@ -12,8 +12,8 @@ services:
       MYSQL_USER: vault
       MYSQL_PASSWORD: vaultdbpasswd
   etcd:
-    image: quay.io/coreos/etcd:latest
-    command: /usr/local/bin/etcd -listen-client-urls http://0.0.0.0:2379 -advertise-client-urls http://etcd:2379
+    image: etcd:latest
+    build: ./etcd
     networks:
       - vaultnet
   vault:
